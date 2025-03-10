@@ -162,6 +162,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $profile_user_id == $user_id) {
                             <h3 class="text-lg font-bold mt-2"><?php echo htmlspecialchars($recipe['title']); ?></h3>
                             <p class="text-sm"><?php echo htmlspecialchars($recipe['description']); ?></p>
                             <a href="recipe.php?id=<?php echo $recipe['recipe_id']; ?>" class="text-blue-500 mt-4 inline-block">View Recipe</a>
+
+                            <!-- Edit and Delete Buttons (only show if the logged-in user owns the recipe) -->
+                            <?php if ($profile_user_id == $user_id): ?>
+                                <div class="mt-4">
+                                    <a href="edit_recipe.php?id=<?php echo $recipe['recipe_id']; ?>" class="bg-yellow-500 text-white p-2 rounded">Edit</a>
+                                    <form action="delete_recipe.php" method="POST" class="inline-block ml-2">
+                                        <input type="hidden" name="recipe_id" value="<?php echo $recipe['recipe_id']; ?>">
+                                        <button type="submit" class="bg-red-500 text-white p-2 rounded" onclick="return confirm('Are you sure you want to delete this recipe?');">Delete</button>
+                                    </form>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     <?php endwhile; ?>
                 </div>

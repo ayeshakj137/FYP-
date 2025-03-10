@@ -22,7 +22,12 @@ mysqli_query($conn, $categoryQuery);
 // Fetch categories for the dropdown
 $categories = mysqli_query($conn, "SELECT * FROM recipe_categories");
 
-// Handle form submission
+// Default values for Chicken Karahi
+$defaultTitle = "Chicken Karahi";
+$defaultDescription = "A delicious Pakistani/Indian chicken curry cooked with tomatoes, spices, and herbs.";
+$defaultIngredients = "500g chicken (bone-in, cut into small pieces)\n3 medium tomatoes (chopped or blended)\n2 medium onions (finely sliced)\n4 cloves garlic (chopped)\n1-inch ginger (julienned)\n2 green chilies (sliced)\n½ cup yogurt\n½ cup oil or ghee\n1 teaspoon cumin seeds\n1 teaspoon coriander powder\n1 teaspoon red chili powder\n½ teaspoon turmeric powder\n1 teaspoon salt (adjust to taste)\n1 teaspoon garam masala\n1 teaspoon black pepper\n1 tablespoon butter (optional, for richness)\nFresh coriander (for garnish)";
+$defaultSteps = "1. Heat oil in a pan and add cumin seeds.\n2. Add sliced onions and sauté until golden brown.\n3. Add chopped garlic and ginger, cook for 30 seconds.\n4. Add chicken pieces and cook until browned.\n5. Add chopped/blended tomatoes, yogurt, and all spices.\n6. Cook on medium heat until the oil separates.\n7. Add green chilies and butter, then simmer for 5 minutes.\n8. Garnish with fresh coriander and serve hot.";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title = mysqli_real_escape_string($conn, $_POST['title']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
@@ -94,16 +99,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         <form action="create_recipe.php" method="post" enctype="multipart/form-data" class="mt-4">
             <label for="title" class="block">Title:</label>
-            <input type="text" name="title" required class="p-2 border border-gray-300 rounded w-full">
+            <input type="text" name="title" value="<?php echo htmlspecialchars($defaultTitle); ?>" required class="p-2 border border-gray-300 rounded w-full">
 
             <label for="description" class="block mt-4">Description:</label>
-            <textarea name="description" required class="p-2 border border-gray-300 rounded w-full"></textarea>
+            <textarea name="description" required class="p-2 border border-gray-300 rounded w-full"><?php echo htmlspecialchars($defaultDescription); ?></textarea>
 
             <label for="ingredients" class="block mt-4">Ingredients:</label>
-            <textarea name="ingredients" required class="p-2 border border-gray-300 rounded w-full"></textarea>
+            <textarea name="ingredients" required class="p-2 border border-gray-300 rounded w-full"><?php echo htmlspecialchars($defaultIngredients); ?></textarea>
 
             <label for="steps" class="block mt-4">Steps:</label>
-            <textarea name="steps" required class="p-2 border border-gray-300 rounded w-full"></textarea>
+            <textarea name="steps" required class="p-2 border border-gray-300 rounded w-full"><?php echo htmlspecialchars($defaultSteps); ?></textarea>
 
             <label for="category_id" class="block mt-4">Category:</label>
             <select name="category_id" required class="p-2 border border-gray-300 rounded w-full">

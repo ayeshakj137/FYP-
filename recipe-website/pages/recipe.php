@@ -87,6 +87,31 @@ if ($user_id && $recipe['author_id']) {
         <h1 class="text-2xl font-bold"><?php echo htmlspecialchars($recipe['title']); ?></h1>
         <p class="text-sm">By <?php echo htmlspecialchars($recipe['author']); ?></p>
 
+        <!-- Report Recipe Button -->
+        <?php if ($user_id): ?>
+            <button onclick="document.getElementById('reportModal').classList.remove('hidden')" 
+                    class="bg-red-500 text-white px-4 py-2 rounded mt-4">
+                Report Recipe
+            </button>
+        <?php endif; ?>
+
+        <!-- Report Recipe Modal -->
+        <div id="reportModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white p-6 rounded shadow-lg w-96">
+                <h2 class="text-xl font-bold mb-4">Report Recipe</h2>
+                <form action="report_recipe.php" method="POST">
+                    <input type="hidden" name="recipe_id" value="<?php echo $recipe_id; ?>">
+                    <label class="block font-semibold">Reason for Reporting:</label>
+                    <textarea name="reason" class="border p-2 w-full mt-2" required></textarea>
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded mt-4">Submit Report</button>
+                    <button type="button" onclick="document.getElementById('reportModal').classList.add('hidden')" 
+                            class="ml-2 bg-gray-500 text-white px-4 py-2 rounded">
+                        Cancel
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <!-- Follow/Unfollow Button -->
         <?php if ($user_id && $recipe['author_id'] && $user_id != $recipe['author_id']): ?>
             <form action="follow_user.php" method="POST" class="mt-4">
